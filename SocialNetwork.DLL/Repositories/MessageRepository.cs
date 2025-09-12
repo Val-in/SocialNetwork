@@ -20,11 +20,6 @@ public class MessageRepository : Repository<MessageEntity>
         var from = await Set.AsQueryable().Where(x => x.SenderId == sender.Id && x.RecipientId == recipient.Id).ToListAsync();
         var to = await Set.AsQueryable().Where(x => x.SenderId == recipient.Id && x.RecipientId == sender.Id).ToListAsync();
 
-        var itog = new List<MessageEntity>();
-        itog.AddRange(from);
-        itog.AddRange(to);
-        itog.OrderBy(x => x.Id);
-        return itog;
-        //return from.Concat(to).OrderBy(x => x.Id).ToList();
+        return from.Concat(to).OrderBy(x => x.Id).ToList();
     }
 }

@@ -45,10 +45,12 @@ public class AccountManagerController(
                 await userService.SignInAsync(model.Email, false);
                 return RedirectToAction("MyPage", "AccountManager");
             }
+            
+            ModelState.AddModelError(nameof(model.Email), " ");
+            ModelState.AddModelError(nameof(model.Password), "Неправильный логин и (или) пароль");
 
-            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
         }
-        return RedirectToAction("Index", "Home");
+        return View(model);
     }
     
     [Route("Logout")]

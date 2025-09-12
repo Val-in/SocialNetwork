@@ -27,20 +27,21 @@
 
         <div class="text-color-gray text-size_12">Дата рождения</div>
         <div style="display: flex;" class="mrgn center">
-            <select asp-for="Date" class="form-control date_control" ID="ddlDay">
-                <option value="@Model.Date">День</option>
-            </select>
-
-            <select asp-for="Month" class="form-control date_control" asp-items="Html.GetEnumSelectList<SocialNetwork.Enums.Months>()" onchange="PopulateDays()" ID="ddlMonth">
-                <option value="@Model.Month">Месяц</option>
-            </select>
             
             <select asp-for="Year" class="form-control date_control" ID="ddlYear"
                     asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-14).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))"
                     onchange="PopulateDays()">
                 <option value="@Model.Year">Год</option>
             </select>
-           
+            
+            <select asp-for="Month" class="form-control date_control" asp-items="Html.GetEnumSelectList<SocialNetwork.Enums.Months>()" onchange="PopulateDays()" ID="ddlMonth">
+                <option value="@Model.Month">Месяц</option>
+            </select>
+            
+            <select asp-for="Date" class="form-control date_control" ID="ddlDay">
+                <option value="@Model.Date">День</option>
+            </select>
+            
         </div>
 
         <div class="center">

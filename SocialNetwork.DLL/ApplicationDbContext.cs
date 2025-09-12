@@ -10,7 +10,6 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         Database.EnsureCreated();
-        //Database.Migrate();
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {

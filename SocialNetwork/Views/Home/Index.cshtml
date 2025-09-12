@@ -9,9 +9,7 @@
 
 @if (UserService.IsSignIn(User))
 {   
-    <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="AccountManager" asp-action="MyPage" type="text/html" >Привет @User.Identity.Name! Нажми на меня чтобы попасть на свою страницу!</a>
-    </li>
+    <meta http-equiv="refresh" content="0, url=@Url.Action("MyPage", "AccountManager")" />
 }
 else
 {
