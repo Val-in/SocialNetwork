@@ -23,11 +23,13 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Restore CycloneDX tool
+        run: dotnet tool restore
+
       - name: Generate SBOM
         run: |
-          dotnet tool restore
           export PATH="$PATH:$HOME/.dotnet/tools"
-          dotnet-CycloneDX dotnet --output sbom.json
+          dotnet-cyclonedx dotnet --output sbom.json
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
