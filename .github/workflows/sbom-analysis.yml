@@ -26,6 +26,7 @@ jobs:
       - name: Generate SBOM
         run: |
           dotnet tool install --global CycloneDX
+          export PATH="$PATH:$HOME/.dotnet/tools"
           dotnet-cyclonedx dotnet --output sbom.json
 
       - name: Upload SBOM artifact
