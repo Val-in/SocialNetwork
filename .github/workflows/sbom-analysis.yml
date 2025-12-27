@@ -50,7 +50,7 @@ jobs:
           path: .
 
       - name: Run Dependency Check
-        uses: jeremylong/dependency-check-action@v3 
+        uses: actions/download-artifact@v4
         with:
           project: 'MyProject'
           scan: '.'
