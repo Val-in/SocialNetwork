@@ -64,10 +64,10 @@ jobs:
           path: dependency-check-report
           retention-days: 7
 
-      - name: Optional: Send SBOM to Dependency Track
+      - name:
+          Optional: Send SBOM to Dependency Track
         run: |
-          # пример отправки через API
           curl -X POST \
             -H "X-Api-Key: ${{ secrets.DT_API_KEY }}" \
             -F "bom=@sbom.json" \
-            https://dependency-track.example.com/api/v1/bom
+            http://localhost:8080/api/v1/bom
