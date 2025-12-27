@@ -29,7 +29,7 @@ jobs:
           cyclonedx dotnet --output sbom.json
 
       - name: Upload SBOM artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sbom
           path: sbom.json
@@ -58,7 +58,7 @@ jobs:
           format: 'ALL'
 
       - name: Upload analysis report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dependency-report
           path: dependency-check-report
