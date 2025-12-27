@@ -50,7 +50,7 @@ jobs:
           path: .
 
       - name: Run Dependency Check
-        uses: OWASP/dependency-check-action@v2
+        uses: dependency-check-action@v3 
         with:
           project: 'MyProject'
           scan: '.'
