@@ -24,10 +24,7 @@ jobs:
         run: dotnet restore
 
       - name: Generate SBOM
-        uses: CycloneDX/cyclonedx-github-action@v2
-        with:
-          output-format: json
-          output-file: sbom.json 
+        run: dotnet tool restore && dotnet cyclonedx dotnet --output sbom.json
       
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
