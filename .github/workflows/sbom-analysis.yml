@@ -1,0 +1,73 @@
+name: SBOM & Dependency Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Generate SBOM
+        run: |
+          dotnet tool install --global CycloneDX
+          cyclonedx dotnet --output sbom.json
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom
+          path: sbom.json
+          retention-days: 7
+
+  security:
+    name: Analyze Dependencies
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download SBOM artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: sbom
+          path: .
+
+      - name: Run Dependency Check
+        uses: OWASP/dependency-check-action@v2
+        with:
+          project: 'MyProject'
+          scan: '.'
+          out: 'dependency-check-report'
+          format: 'ALL'
+
+      - name: Upload analysis report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-report
+          path: dependency-check-report
+          retention-days: 7
+
+      - name: Optional: Send SBOM to Dependency Track
+        run: |
+          # пример отправки через API
+          curl -X POST \
+            -H "X-Api-Key: ${{ secrets.DT_API_KEY }}" \
+            -F "bom=@sbom.json" \
+            https://dependency-track.example.com/api/v1/bom
